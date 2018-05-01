@@ -15,6 +15,7 @@ function getTxt() {
   // We will learn more about how to use the replace function in an upcoming lesson.
 }
 function getLetters() {
+    let arr = [];
   let letterCounts = {};
   let typedText = getTxt();
   for (let i = 0; i < typedText.length; i++) {
@@ -23,11 +24,18 @@ function getLetters() {
       ? (letterCounts[currentLetter] = 1)
       : letterCounts[currentLetter]++;
   }
-  return letterCounts;
+  for (let letter in letterCounts){
+    arr.push([letter, letterCounts[letter]]);
+}
+
+    arr.sort((a,b)=> b[1]-a[1]);
+    return arr;
+
 }
 
 function getWords() {
   let wordCounts = {};
+  let arr = [];
   const splitText = getTxt().split(" ");
   for (let i = 0; i < splitText.length; i++) {
     currentLetter = splitText[i];
@@ -35,16 +43,22 @@ function getWords() {
       ? (wordCounts[currentLetter] = 1)
       : wordCounts[currentLetter]++;
   }
-  return wordCounts;
+    
+    for (let word in wordCounts){
+        arr.push([word, wordCounts[word]]);
+    }
+   
+    arr.sort((a,b)=> b[1]-a[1]);
+  return arr;
 }
 
 function printLetters(letterCounts) {
   for (letter in letterCounts) {
-    if (letter !== "") {
+    if (letter !== " ") {
       let span = document.createElement("span");
       let textContent = document.createTextNode(
-        '"' + letter + '": ' + letterCounts[letter] + ", "
-      );
+        `${letterCounts[letter].splice(',').join( ': ')}, `
+    );
       span.appendChild(textContent);
       document.getElementById("lettersDiv").appendChild(span);
     }
@@ -52,10 +66,10 @@ function printLetters(letterCounts) {
 }
 function printWords(wordCounts) {
   for (word in wordCounts) {
-    if (word !== "") {
+    if (word !== " ") {
       let span = document.createElement("span");
       let textContent = document.createTextNode(
-        `"${word}":${wordCounts[word]}  ,`
+        `${wordCounts[word].splice(',').join( ': ')}, `
       );
       span.appendChild(textContent);
       document.getElementById("wordsDiv").appendChild(span);
