@@ -1,4 +1,6 @@
 document.getElementById("countButton").onclick = function() {
+  document.getElementById("wordsDiv").textContent = "";
+  document.getElementById("lettersDiv").textContent = "";
   // your code will go here ...
 
   let typedText = document.getElementById("textInput").value;
@@ -11,7 +13,7 @@ document.getElementById("countButton").onclick = function() {
   // We will learn more about how to use the replace function in an upcoming lesson.
   let letterCounts = {};
   let wordCounts = {};
-  const splitText = typedText.split(' ');
+  const splitText = typedText.split(" ");
   console.log(splitText);
 
   for (let i = 0; i < typedText.length; i++) {
@@ -34,19 +36,23 @@ document.getElementById("countButton").onclick = function() {
   }
 
   for (letter in letterCounts) {
-    let span = document.createElement("span");
-    let textContent = document.createTextNode(
-      '"' + letter + '": ' + letterCounts[letter] + ", "
-    );
-    span.appendChild(textContent);
-    document.getElementById("lettersDiv").appendChild(span);
+    if (letter !== 0) {
+      let span = document.createElement("span");
+      let textContent = document.createTextNode(
+        '"' + letter + '": ' + letterCounts[letter] + ", "
+      );
+      span.appendChild(textContent);
+      document.getElementById("lettersDiv").appendChild(span);
+    }
   }
   for (word in wordCounts) {
-    let span = document.createElement("span");
-    let textContent = document.createTextNode(
-      '"' + word + '": ' + wordCounts[word] + ", "
-    );
-    span.appendChild(textContent);
-    document.getElementById("wordsDiv").appendChild(span);
+    if (word !== "") {
+      let span = document.createElement("span");
+      let textContent = document.createTextNode(
+        `"${word}":${wordCounts[word]}  ,`
+      );
+      span.appendChild(textContent);
+      document.getElementById("wordsDiv").appendChild(span);
+    }
   }
-}
+};
