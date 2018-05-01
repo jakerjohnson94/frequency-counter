@@ -1,42 +1,46 @@
 document.getElementById("countButton").onclick = function() {
   document.getElementById("wordsDiv").textContent = "";
   document.getElementById("lettersDiv").textContent = "";
-  // your code will go here ...
 
+  printWords(getWords());
+  printLetters(getLetters());
+};
+
+function getTxt() {
   let typedText = document.getElementById("textInput").value;
-
   typedText = typedText.toLowerCase();
   // This changes all the letter to lower case.
-
-  typedText = typedText.replace(/[^a-z'\s]+/g, "");
+  return typedText.replace(/[^a-z'\s]+/g, "");
   // This gets rid of all the characters except letters, spaces, and apostrophes.
   // We will learn more about how to use the replace function in an upcoming lesson.
+}
+function getLetters() {
   let letterCounts = {};
-  let wordCounts = {};
-  const splitText = typedText.split(" ");
-  console.log(splitText);
-
+  let typedText = getTxt();
   for (let i = 0; i < typedText.length; i++) {
     currentLetter = typedText[i];
-
-    if (letterCounts[currentLetter] === undefined) {
-      letterCounts[currentLetter] = 1;
-    } else {
-      letterCounts[currentLetter]++;
-    }
+    letterCounts[currentLetter] === undefined
+      ? (letterCounts[currentLetter] = 1)
+      : letterCounts[currentLetter]++;
   }
+  return letterCounts;
+}
+
+function getWords() {
+  let wordCounts = {};
+  const splitText = getTxt().split(" ");
   for (let i = 0; i < splitText.length; i++) {
     currentLetter = splitText[i];
-
-    if (wordCounts[currentLetter] === undefined) {
-      wordCounts[currentLetter] = 1;
-    } else {
-      wordCounts[currentLetter]++;
-    }
+    wordCounts[currentLetter] === undefined
+      ? (wordCounts[currentLetter] = 1)
+      : wordCounts[currentLetter]++;
   }
+  return wordCounts;
+}
 
+function printLetters(letterCounts) {
   for (letter in letterCounts) {
-    if (letter !== 0) {
+    if (letter !== "") {
       let span = document.createElement("span");
       let textContent = document.createTextNode(
         '"' + letter + '": ' + letterCounts[letter] + ", "
@@ -45,6 +49,8 @@ document.getElementById("countButton").onclick = function() {
       document.getElementById("lettersDiv").appendChild(span);
     }
   }
+}
+function printWords(wordCounts) {
   for (word in wordCounts) {
     if (word !== "") {
       let span = document.createElement("span");
@@ -55,4 +61,4 @@ document.getElementById("countButton").onclick = function() {
       document.getElementById("wordsDiv").appendChild(span);
     }
   }
-};
+}
